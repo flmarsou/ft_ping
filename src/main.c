@@ -21,5 +21,8 @@ i32	main(const i32 argc, const i8 **argv)
 	if (!parse_arguments(argc, argv, &ping))
 		return (1);
 
+	if (!parse_dns(&ping))
+		return (2);
+
 	return (0);
 }

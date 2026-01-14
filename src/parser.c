@@ -3,6 +3,13 @@
 # include <ctype.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <string.h>
+
+# include <netdb.h>
+
+// ========================================================================== //
+//    Argument Parser                                                         //
+// ========================================================================== //
 
 static bool	parse_single(const i8 *argument, bool *option)
 {
@@ -157,6 +164,39 @@ bool	parse_arguments(const i32 argc, const i8 **argv, t_ping *ping)
 
 	if (!parse_destination(argc, argv, ping, &i))
 		return (false);
+
+	return (true);
+}
+
+// ========================================================================== //
+//    Address Parser                                                          //
+// ========================================================================== //
+
+bool	parse_dns(t_ping *ping)
+{
+	struct addrinfo		hints;
+	struct addrinfo		*res;
+	struct sockaddr_in	*addr;
+
+	// If destination is already a valid IPv4 address
+	if (inet_pton(AF_INET, ping->destination, ping->ip) == 1)
+		return (true);
+
+	// DNS resolution
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_INET;		// IPv4 only
+	hints.ai_socktype = SOCK_RAW;	// Any socket
+
+	if (getaddrinfo(ping->destination, NULL, &hints, &res) || !res)
+	{
+		fprintf(stderr, "Error: Couldn't resolve DNS \"%s\"\n", ping->destination);
+		return (false);
+	}
+
+	addr = (struct sockaddr_in *)res->ai_addr;
+	inet_ntop(AF_INET, &addr->sin_addr, ping->ip, INET_ADDRSTRLEN);
+
+	freeaddrinfo(res);
 
 	return (true);
 }
