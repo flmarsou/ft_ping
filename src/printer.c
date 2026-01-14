@@ -2,7 +2,7 @@
 
 # include <stdio.h>
 
-void	print_help(bool invalid_flag, const i8 flag)
+void	print_help(const bool invalid_flag, const i8 flag)
 {
 	if (invalid_flag)
 		fprintf(stderr, "Error: invalid flag '%c'\n\n", flag);
@@ -23,7 +23,7 @@ void	print_help(bool invalid_flag, const i8 flag)
 	);
 }
 
-void	print_ping(t_ping ping)
+void	print_ping(const t_ping ping)
 {
 	printf("Audible:  %d\n", ping.audible);
 	printf("Count:    %d\n", ping.count);
@@ -32,5 +32,7 @@ void	print_ping(t_ping ping)
 	printf("Quiet:    %d\n", ping.quiet);
 	printf("Size:     %d\n", ping.size);
 	printf("Verbose:  %d\n", ping.verbose);
+
 	printf("Dest:     %s\n", ping.destination);
+	printf("IP:       %s\n", ping.ip);
 }
