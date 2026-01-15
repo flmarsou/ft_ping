@@ -5,6 +5,7 @@ EXE			:=	ft_ping
 SRC			:=	src/main.c \
 				src/parser.c \
 				src/printer.c \
+				src/ft_ping.c \
 
 # Variables
 CC			:=	cc
@@ -16,8 +17,18 @@ all			:	${EXE}
 ${EXE}		:	${SRC}
 				${CC} ${CFLAGS} ${SRC} -o ${EXE}
 
-clean		:
-				rm -rf ${EXE}
+build:
+			docker build -t ft_ping .
+
+run:
+			docker run -it ft_ping
+
+rm:
+			docker rm -f ft_ping || true
+			docker rmi -f ft_ping || true
+
+clean:
+			rm -rf ${EXE}
 
 re			:	clean all
 
