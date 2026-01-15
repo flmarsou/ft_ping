@@ -5,7 +5,7 @@ static void	init_ping(t_ping *ping)
 	ping->audible = false;
 	ping->count = 0;
 	ping->date = false;
-	ping->interval = 0;
+	ping->interval = 1;
 	ping->quiet = false;
 	ping->size = 0;
 	ping->verbose = false;
@@ -23,6 +23,8 @@ i32	main(const i32 argc, const i8 **argv)
 
 	if (!parse_dns(&ping))
 		return (2);
+
+	ft_ping(ping);
 
 	return (0);
 }

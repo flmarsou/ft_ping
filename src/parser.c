@@ -198,5 +198,7 @@ bool	parse_dns(t_ping *ping)
 
 	freeaddrinfo(res);
 
+	ping->addr = addr;
+
 	return (true);
 }

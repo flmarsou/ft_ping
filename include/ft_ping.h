@@ -20,7 +20,8 @@ typedef struct	s_ping
 	const i8	*destination;	// Address
 
 	// Data
-	i8			ip[INET_ADDRSTRLEN];
+	i8					ip[INET_ADDRSTRLEN];
+	struct sockaddr_in	*addr;
 }	t_ping;
 
 bool	parse_arguments(const i32 argc, const i8 **argv, t_ping *ping);
@@ -28,3 +29,5 @@ bool	parse_dns(t_ping *ping);
 
 void	print_help(const bool invalid_flag, const i8 flag);
 void	print_ping(const t_ping ping);
+
+void	ft_ping(const t_ping ping);
